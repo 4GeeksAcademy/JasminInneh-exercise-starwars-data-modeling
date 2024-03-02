@@ -29,18 +29,18 @@ class Planets(Base):
     name = Column(String)
     description = Column(String)
     planet_id = Column(Integer, ForeignKey('character.id'))
-    # edit this line below tomorrow
-    homeworld = relationship("Planet", back_populates="characters")
+    resident = relationship("Character", back_populates="plantets", uselist=True)
 
-# no edits to this table yet. Needs updating to fit the favorites criteria
 class Favorites(Base):
     __tablename__ = 'characters'
     id = Column(Integer, primary_key=True)
     name = Column(String)
-    description = Column(String)
-    homeworld_id = Column(Integer, ForeignKey('planets.id'))
-    homeworld = relationship("Planet", back_populates="characters")
-
+    user = relationship("User", foreign_key=[user_id])
+    user_id = Column(Integer, ForeignKey('user.id'))
+    planet = relationship("Planets", foreign_key=[planet_id])
+    planet_id = Column(Integer, ForeignKey('planets.id'))
+    character = relationship("Characters", foreign_key=[character_id])
+    character_id = Column(Integer, ForeignKey('characters.id'))
 
 
 ## Draw from SQLAlchemy base
