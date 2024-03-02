@@ -14,6 +14,8 @@ class User(Base):
     email = Column(String, unique=True)
     password_hash = Column(String)
     date_joined = Column(String)
+    Favorites = relationship("Favorites", back_populates="user")
+    favorite_id = Column(Integer, ForeignKey("favorites.id"))
 
 class Character(Base):
     __tablename__ = 'characters'
@@ -32,14 +34,14 @@ class Planets(Base):
     resident = relationship("Character", back_populates="plantets", uselist=True)
 
 class Favorites(Base):
-    __tablename__ = 'characters'
+    __tablename__ = 'favorites'
     id = Column(Integer, primary_key=True)
     name = Column(String)
-    user = relationship("User", foreign_key=[user_id])
+    user = relationship("User")
     user_id = Column(Integer, ForeignKey('user.id'))
-    planet = relationship("Planets", foreign_key=[planet_id])
+    planet = relationship("Planets")
     planet_id = Column(Integer, ForeignKey('planets.id'))
-    character = relationship("Characters", foreign_key=[character_id])
+    character = relationship("Characters")
     character_id = Column(Integer, ForeignKey('characters.id'))
 
 
